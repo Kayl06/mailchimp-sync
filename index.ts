@@ -6,7 +6,7 @@ const crypto = require("crypto");
 
 const bodyParser = require("body-parser");
 
-const apiKey = "30cf64d2f17c01965f98ce242e1ab5d9-us21";
+const apiKey = "8b0d68ac03aca67d9a857df8fbee1461-us21";
 const serverPrefix = "us21";
 const listId = "51176f9c99";
 const myHash = crypto.createHash("sha256").update("subhash2023").digest("hex");
