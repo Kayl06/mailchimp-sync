@@ -11,9 +11,6 @@ const serverPrefix = "us21";
 const listId = "51176f9c99";
 const myHash = crypto.createHash("sha256").update("subhash2023").digest("hex");
 
-const createCsvWriter = require("csv-writer").createObjectCsvWriter;
-const fs = require("fs");
-
 mailchimp.setConfig({
   apiKey: apiKey,
   server: serverPrefix,
@@ -70,53 +67,6 @@ app.get("/getMembers", async function (req: any, res: any) {
     });
 
     res.send(response.members);
-  } catch (error) {
-    res.send(error);
-  }
-});
-
-app.get("/export-csv", async function (req: any, res: any) {
-  try {
-    const encodedData = req.query.data;
-    const decodedData = decodeURIComponent(encodedData);
-    const data = JSON.parse(decodedData);
-
-    res.send(data);
-
-    // Define the CSV writer and the output file path
-    const csvWriter = createCsvWriter({
-      path: "mailchimp_contacts.csv",
-      header: [
-        { id: "email_address", title: "Email Address" },
-        { id: "first_name", title: "First Name" },
-        { id: "last_name", title: "Last Name" },
-        { id: "address", title: "Address" },
-        { id: "phone", title: "Phone" },
-      ],
-    });
-
-    // Write the data to the CSV file
-    csvWriter
-      .writeRecords(data)
-      .then(() => console.log("The CSV file was written successfully"))
-      .catch((err: any) => console.error(err));
-
-    const file = "mailchimp_contacts.csv";
-
-    // Read the file from disk and send it as a response to the client
-    fs.readFile(file, (err: any, data: any) => {
-      if (err) {
-        console.error(err);
-        res.status(500).end();
-      } else {
-        res.setHeader(
-          "Content-disposition",
-          "attachment; filename=mailchimp_contacts.csv"
-        );
-        res.set("Content-Type", "text/csv");
-        res.status(200).send(data);
-      }
-    });
   } catch (error) {
     res.send(error);
   }
