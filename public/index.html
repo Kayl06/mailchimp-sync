@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MailChimp Sync Contact</title>
+    <base href="/">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class=" bg-[#F8F9FA]">
+    <div class="container max-w-[1200px] w-full mx-auto">
+        <div
+            class="__menu bg-white mx-auto flex justify-between items-center uppercase font-[700] lg:flex mt-[42px] p-[20px] rounded-[15px]">
+            <div class="__app">
+                <span class="__app_name tracking-widest">MailChimp Sync</span>
+                <span class="__app_logo"></span>
+            </div>
+
+            <div class="__toolbar">
+                <div class="_actions flex items-center">
+                    <span class="__file_name text-[12px] font-[500] mr-[5px]"></span>
+                    <button
+                        class="text-[12px] flex gap-[5px] items-center bg-black text-white py-[10px] px-5 rounded __file_import drop-shadow-md"
+                        type="button" onclick="FileUpload.handleOpenFileInput()">
+                        <input type="file" id="file-input" class="hidden" />
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden __loading_icon"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        <span class="tracking-widest __label"> IMPORT CSV </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="bg-white shadow-[0_3.5px_5.5px_rgba(0,0,0,0.02)] __table1 __panel rounded-[15px] p-[20px] my-[24px]">
+            <div class="__header"></div>
+            <div class="__body_content">
+                <div class="__header flex justify-between mb-[24px]">
+                    <div class="__header_title">
+                        <h1 class="font-bold uppercase tracking-widest">Contacts</h1>
+                        <div class="font-[400] text-[14px] mb-[37px] flex items-center">
+                            <span class="text-[#484848] __total_contacts"></span>
+                        </div>
+                    </div>
+
+                    <div class="__toolbar_actions">
+                        <button
+                            class="text-[12px] flex gap-[5px] items-center bg-white text-black border hover:drop-shadow-md py-[10px] px-5 rounded uppercase font-bold __file_export"
+                            disabled onclick="DownloadMembers.go()">Export
+                            CSV</button>
+                    </div>
+                </div>
+
+                <div
+                    class="__success_message hidden text-[13px] w-full font-bold rounded-[10px] drop-shadow-md border text-white border-gray-100 bg-gray-900 p-[20px] mb-[30px]">
+                    All of the contacts have been imported successfully.
+                </div>
+
+                <div class="__table overflow-x-auto max-h-[500px]">
+                    <table class="table-fixed lg:table-auto w-full border-spacing-2">
+                        <thead>
+                            <tr class="border-b-2">
+                                <th align="start" class="text-[#A0AEC0] text-[12px] font-bold uppercase pb-[12px]">
+                                    #
+                                </th>
+
+                                <th align="start" class="text-[#A0AEC0] text-[12px] font-bold uppercase pb-[12px]">
+                                    Email Address
+                                </th>
+
+                                <th align="start" class="text-[#A0AEC0] text-[12px] font-bold uppercase pb-[12px]">
+                                    First Name
+                                </th>
+
+                                <th align="start" class="text-[#A0AEC0] text-[12px] font-bold uppercase pb-[12px]">
+                                    Last Name
+                                </th>
+
+                                <th align="start" class="text-[#A0AEC0] text-[12px] font-bold uppercase pb-[12px]">
+                                    Address
+                                </th>
+
+                                <th align="start" class="text-[#A0AEC0] text-[12px] font-bold uppercase pb-[12px]">
+                                    Phone Number
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="__member_table"></tbody>
+                    </table>
+                </div>
+
+                <div class="__tfoot mt-[20px]">
+                            
+                </div>
+
+                <div class="w-full d-flex justify-center mt-[20px] __loading_row">
+                    <div class="flex items-center justify-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[#5d5d5d]" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/src/GetMembers.js"></script>
+    <script src="/src/FileUpload.js"></script>
+    <script src="/src/DownloadMembers.js"></script>
+</body>
+
+</html>
