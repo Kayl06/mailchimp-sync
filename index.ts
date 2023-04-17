@@ -8,10 +8,10 @@ const countryList = require("country-list");
 
 const bodyParser = require("body-parser");
 
-const apiKey = "d31eecdb83f2dc8b95bcc1ffe27a2e0e-us21";
+const apiKey = "e8c1f565de97e3fe0c0b2163ec1b7b8c-us21";
 const serverPrefix = "us21";
-const listId = "51176f9c99";
 const myHash = crypto.createHash("sha256").update("subhash2023").digest("hex");
+let listId;
 
 mailchimp.setConfig({
   apiKey: apiKey,
@@ -34,32 +34,7 @@ app.get("/dist/output.css", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "dist", "output.css"));
 });
 
-app.get("/src/FileUpload.js", (req: Request, res: Response) => {
-  res.setHeader("Content-Type", "text/javascript");
-  res.sendFile(path.join(__dirname, "src", "FileUpload.js"));
-});
-
-app.get("/src/GetMembers.js", (req: Request, res: Response) => {
-  res.setHeader("Content-Type", "text/javascript");
-  res.sendFile(path.join(__dirname, "src", "GetMembers.js"));
-});
-
-app.get("/src/DownloadMembers.js", (req: Request, res: Response) => {
-  res.setHeader("Content-Type", "text/javascript");
-  res.sendFile(path.join(__dirname, "src", "DownloadMembers.js"));
-});
-
-app.get("/src/Countries.js", (req: Request, res: Response) => {
-  res.setHeader("Content-Type", "text/javascript");
-  res.sendFile(path.join(__dirname, "src", "Countries.js"));
-});
-
-app.get("/src/Modal.js", (req: Request, res: Response) => {
-  res.setHeader("Content-Type", "text/javascript");
-  res.sendFile(path.join(__dirname, "src", "Modal.js"));
-});
-
-app.post("/upload", async function (req: any, res: any) {
+app.post("/add", async function (req: any, res: any) {
   const json = req.body;
 
   try {
@@ -96,7 +71,8 @@ app.get("/getCountries", async function (req: any, res: any) {
 
 const getAllList = async function () {
   const response = await mailchimp.lists.getAllLists();
-  console.log(response);
+
+  return response.lists;
 };
 
 const getList = async () => {
@@ -131,6 +107,18 @@ app.listen(PORT, (): void => {
   console.log(`Server Running here 👉 http://localhost:${PORT}`);
 });
 
-const run = async () => {};
+const run = async () => {
+  try {
+    const allList = await getAllList();
+    listId = allList[0].id; // always return first audience
+
+    console.log(listId);
+    
+
+  } catch (error) {
+    console.log(error);
+    
+  }
+};
 
 run();

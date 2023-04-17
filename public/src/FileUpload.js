@@ -24,6 +24,7 @@ const FileUpload = (function () {
           loadingIcon.classList.remove("hidden");
 
           membersTable.deleteRow(0);
+          membersTable.innerHTML = "";
 
           for (let i = 1; i < lines.length; i++) {
             const obj = {};
@@ -59,16 +60,18 @@ const FileUpload = (function () {
 
             result.push(req_obj);
             emails.push(obj["Email_Email_address"]);
+           
+            let address = req_obj.merge_fields.ADDRESS && `${req_obj.merge_fields.ADDRESS.addr1} ${req_obj.merge_fields.ADDRESS.addr2} ${req_obj.merge_fields.ADDRESS.city} ${req_obj.merge_fields.ADDRESS.country} ${req_obj.merge_fields.ADDRESS.state} ${req_obj.merge_fields.ADDRESS.zip}`;
 
             data.push({
               email_address: req_obj.email_address,
               first_name: req_obj.merge_fields.FNAME,
               last_name: req_obj.merge_fields.LNAME,
-              address: `${req_obj.merge_fields.ADDRESS.addr1} ${req_obj.merge_fields.ADDRESS.addr2} ${req_obj.merge_fields.ADDRESS.city} ${req_obj.merge_fields.ADDRESS.country} ${req_obj.merge_fields.ADDRESS.state} ${req_obj.merge_fields.ADDRESS.zip}`,
+              address: address,
               phone: req_obj.merge_fields.PHONE,
             });
 
-            const res = await FileUpload.handleSendRequest(req_obj);
+            const res = await Contact.add(req_obj);
 
             rowData = req_obj;
 
@@ -108,27 +111,9 @@ const FileUpload = (function () {
           fileImportBtn.disabled = false;
           fileExportButton.disabled = false;
           loadingIcon.classList.add("hidden");
-        };
-      });
-    },
+          GetMembers.init();
 
-    handleSendRequest: (req_obj) => {
-      return new Promise((resolve, reject) => {
-        fetch("/upload", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(req_obj),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            console.error("Error sending data to server:", error);
-            reject(error);
-          });
+        };
       });
     },
 

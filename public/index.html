@@ -23,12 +23,11 @@
             <div class="__toolbar">
                 <div class="_actions flex items-center gap-2">
                     <span class="__file_name text-[12px] font-[500] mr-[5px]"></span>
-                    <button
-                        onclick="Modal.show()"
+                    <button onclick="Modal.show()"
                         class="text-[12px] flex gap-[5px] items-center bg-black text-white py-[10px] px-5 rounded __file_import drop-shadow-md"
                         type="button">
 
-                        <span class="tracking-widest __label uppercase"> CREATE CONTACT </span>
+                        <span class="tracking-widest uppercase"> CREATE CONTACT </span>
                     </button>
 
                     <button
@@ -56,7 +55,7 @@
                 <div class="__header flex justify-between mb-[24px]">
                     <div class="__header_title">
                         <h1 class="font-bold uppercase tracking-widest">Contacts</h1>
-                        <div class="font-[400] text-[14px] mb-[37px] flex items-center">
+                        <div class="font-[400] text-[14px] mb-[20px] flex items-center">
                             <span class="text-[#484848] __total_contacts"></span>
                         </div>
                     </div>
@@ -140,7 +139,8 @@
                 </div>
 
                 <div>
-                    <button onclick="Modal.hide()"  class="uppercase text-[12px] border border-black px-3 py-2 rounded-full">
+                    <button onclick="Modal.hide()"
+                        class="uppercase text-[12px] border border-black px-3 py-2 rounded-full">
                         x
                     </button>
                 </div>
@@ -211,7 +211,7 @@
                             <div class="__inputs text-start block mb-[24px]">
                                 <span
                                     class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">Postal/Zip</span>
-                                <input type="text" name="zip"
+                                <input type="number" name="zip"
                                     class="required:border-red-500 mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1"
                                     placeholder="Postal/Zip" value="">
                             </div>
@@ -225,6 +225,14 @@
                                     <option value="US">USA</option>
                                 </select>
                             </div>
+
+                            <div class="__inputs text-start block mb-[24px]">
+                                <span
+                                    class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">Phone</span>
+                                <input type="text" name="phone_number"
+                                    class="required:border-red-500 mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1"
+                                    placeholder="Phone number" value="">
+                            </div>
                         </section>
 
                     </div>
@@ -232,7 +240,7 @@
                     <div class="flex justify-end __actions py-[40px]">
                         <button
                             class="text-[12px] flex gap-[5px] items-center bg-black text-white py-[10px] px-5 rounded __file_import drop-shadow-md"
-                            type="button" name="submit">
+                            type="submit" name="submit">
 
                             <span class="tracking-widest __label uppercase"> submit </span>
                         </button>
@@ -242,11 +250,28 @@
         </div>
     </div>
 
+    <div class="hidden __notification ">
+        <div class="absolute top-0 right-0 m-5">
+            <div class="bg-white rounded-lg border-gray-300 border p-3 shadow-lg">
+                <div class="flex flex-row">
+                    <div class="px-2 __svg">
+                    </div>
+                    <div class="ml-2 mr-6">
+                        <span class="font-semibold __header_message text-[15px]"></span>
+                        <span class="block text-gray-500 __detailed_message text-[12px]"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/src/Contact.js"></script>
     <script src="/src/GetMembers.js"></script>
     <script src="/src/FileUpload.js"></script>
-    <script src="/src/DownloadMembers.js"></script>
     <script src="/src/Countries.js"></script>
+    <script src="/src/DownloadMembers.js"></script>
     <script src="/src/Modal.js"></script>
+    <script src="/src/Notification.js"></script>
 </body>
 
 </html>

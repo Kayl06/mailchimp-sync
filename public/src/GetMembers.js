@@ -5,7 +5,7 @@ let data = [];
 
 const GetMembers = (function () {
   return {
-    init: async (isImmediateLoad = false) => {
+    init: async (isImmediateLoad = true) => {
       if (!isImmediateLoad) {
         GetMembers.noDataHTML();
         return;
@@ -20,14 +20,17 @@ const GetMembers = (function () {
         }
 
         membersTable.deleteRow(0);
+        membersTable.innerHTML = "";
         members.map((member, i) => {
-          GetMembers.addRow(member)
+          GetMembers.addRow(member);
 
+          let address = member.merge_fields.ADDRESS && `${member.merge_fields.ADDRESS.addr1} ${member.merge_fields.ADDRESS.addr2} ${member.merge_fields.ADDRESS.city} ${member.merge_fields.ADDRESS.country} ${member.merge_fields.ADDRESS.state} ${member.merge_fields.ADDRESS.zip}`
+          
           data.push({
             email_address: member.email_address,
             first_name: member.merge_fields.FNAME,
             last_name: member.merge_fields.LNAME,
-            address: `${member.merge_fields.ADDRESS.addr1} ${member.merge_fields.ADDRESS.addr2} ${member.merge_fields.ADDRESS.city} ${member.merge_fields.ADDRESS.country} ${member.merge_fields.ADDRESS.state} ${member.merge_fields.ADDRESS.zip}`,
+            address: address,
             phone: member.merge_fields.PHONE,
           });
         });
@@ -37,7 +40,7 @@ const GetMembers = (function () {
         ).textContent = `Total # of contacts: ${members.length}`;
         document.querySelector(`.__tfoot`).innerHTML = `
         <div class="text-[12px] font-bold">
-                              <td class="pt-[20px]" colspan="10">1-${ members.length }</td>
+                              <td class="pt-[20px]" colspan="10">1-${members.length}</td>
                           </div>`;
 
         fileExportButton.removeAttribute("disabled");
@@ -54,19 +57,18 @@ const GetMembers = (function () {
     },
 
     addRow: (rowData) => {
+      let address =
+        rowData.merge_fields.ADDRESS &&
+        `<td class="py-[20px]">${rowData.merge_fields.ADDRESS.addr1} ${rowData.merge_fields.ADDRESS.addr2} ${rowData.merge_fields.ADDRESS.city} ${rowData.merge_fields.ADDRESS.country} ${rowData.merge_fields.ADDRESS.state} ${rowData.merge_fields.ADDRESS.zip}</td>`;
       const newRowHTML = `
       <tr class="border-b text-[13px]">
-          <td class="py-[20px] font-[600]"> ${membersTable.rows.length + 1} </td>
+          <td class="py-[20px] font-[600]"> ${
+            membersTable.rows.length + 1
+          } </td>
           <td class="py-[20px]">${rowData.email_address}</td>
           <td class="py-[20px]">${rowData.merge_fields.FNAME}</td>
           <td class="py-[20px]">${rowData.merge_fields.LNAME}</td>
-          <td class="py-[20px]">${rowData.merge_fields.ADDRESS.addr1} ${
-        rowData.merge_fields.ADDRESS.addr2
-      } ${rowData.merge_fields.ADDRESS.city} ${
-        rowData.merge_fields.ADDRESS.country
-      } ${rowData.merge_fields.ADDRESS.state} ${
-        rowData.merge_fields.ADDRESS.zip
-      }</td>
+          ${address}
           <td class="py-[20px]">${rowData.merge_fields.PHONE}</td>
       </tr>
   `;
@@ -83,4 +85,4 @@ const GetMembers = (function () {
   };
 })();
 
-GetMembers.init(true);
+GetMembers.init();

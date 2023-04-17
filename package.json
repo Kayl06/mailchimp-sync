@@ -6,13 +6,14 @@
     "csv-parser": "^3.0.0",
     "csv-writer": "^1.6.0",
     "express": "^4.18.2",
+    "mime": "^3.0.0",
     "multer": "^1.4.5-lts.1"
   },
   "name": "mailchimp_sync1",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node index.ts",
     "dev": "ts-node-dev --respawn ./index.ts npx tailwindcss -i ./src/css/index.css -o ./dist/output.css --watch"
   },
   "keywords": [],
