@@ -11,7 +11,7 @@
 
 </head>
 
-<body class=" bg-[#F8F9FA]">
+<body class=" bg-[#F8F9FA] ">
     <div class="container max-w-[1200px] w-full mx-auto">
         <div
             class="__menu bg-white mx-auto flex justify-between items-center uppercase font-[700] lg:flex mt-[42px] p-[20px] rounded-[15px]">
@@ -21,8 +21,16 @@
             </div>
 
             <div class="__toolbar">
-                <div class="_actions flex items-center">
+                <div class="_actions flex items-center gap-2">
                     <span class="__file_name text-[12px] font-[500] mr-[5px]"></span>
+                    <button
+                        onclick="Modal.show()"
+                        class="text-[12px] flex gap-[5px] items-center bg-black text-white py-[10px] px-5 rounded __file_import drop-shadow-md"
+                        type="button">
+
+                        <span class="tracking-widest __label uppercase"> CREATE CONTACT </span>
+                    </button>
+
                     <button
                         class="text-[12px] flex gap-[5px] items-center bg-black text-white py-[10px] px-5 rounded __file_import drop-shadow-md"
                         type="button" onclick="FileUpload.handleOpenFileInput()">
@@ -35,7 +43,7 @@
                                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                             </path>
                         </svg>
-                        <span class="tracking-widest __label"> IMPORT CSV </span>
+                        <span class="tracking-widest __label uppercase"> IMPORT CSV </span>
                     </button>
                 </div>
             </div>
@@ -66,7 +74,7 @@
                     All of the contacts have been imported successfully.
                 </div>
 
-                <div class="__table overflow-x-auto max-h-[500px]">
+                <div class="__table overflow-x-auto h-[500px]">
                     <table class="table-fixed lg:table-auto w-full border-spacing-2">
                         <thead>
                             <tr class="border-b-2">
@@ -95,26 +103,141 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="__member_table"></tbody>
+                        <tbody class="__member_table">
+                            <tr align="center">
+                                <td colspan="6">
+                                    <div class="w-full d-flex justify-center mt-[20px] __loading_row">
+                                        <div class="flex items-center justify-center">
+                                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[#5d5d5d]"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                                    stroke-width="4">
+                                                </circle>
+                                                <path class="opacity-75" fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
 
-                <div class="__tfoot mt-[20px]">
-                            
+                <div class="__tfoot mt-[20px]"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="__modal hidden">
+        <div class="fixed inset-0 bg-gray-500 opacity-80"></div>
+        <div class="fixed inset-0 md:inset-20 xl:inset-x-[500px] p-10 bg-white rounded-xl shadow-md overflow-auto">
+            <div class="__modal_header mb-5 font-bold uppercase tracking-wide flex justify-between items-center">
+                <div>
+                    Create new contact
                 </div>
 
-                <div class="w-full d-flex justify-center mt-[20px] __loading_row">
-                    <div class="flex items-center justify-center">
-                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-[#5d5d5d]" xmlns="http://www.w3.org/2000/svg"
-                            fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                            </path>
-                        </svg>
-                    </div>
+                <div>
+                    <button onclick="Modal.hide()"  class="uppercase text-[12px] border border-black px-3 py-2 rounded-full">
+                        x
+                    </button>
                 </div>
+            </div>
+
+            <div class="justify-between h-full __modal_body">
+                <form class="__form text-[13px]">
+                    <div class="__form_inputs">
+                        <div class="__inputs text-start block mb-[24px]">
+                            <span class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">Email
+                                <span class="__required text-red-500">*</span>
+                            </span>
+                            <input type="email" name="email"
+                                class="required:border-red-500 mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1"
+                                placeholder="Your email address" value="">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="__inputs text-start block mb-[24px]">
+                                <span class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">First
+                                    name</span>
+                                <input type="text" name="fname"
+                                    class="mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1"
+                                    placeholder="Your First name" value="">
+                            </div>
+                            <div class="__inputs text-start block mb-[24px]">
+                                <span class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">Last
+                                    name</span>
+                                <input type="text" name="lname"
+                                    class="mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1"
+                                    placeholder="Your Last name" value="">
+                            </div>
+                        </div>
+
+                        <section class="__address_section">
+                            <div class="__inputs text-start block mb-[24px]">
+                                <span class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">Street
+                                    Address
+                                </span>
+                                <input type="text" name="address1"
+                                    class="required:border-red-500 mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1"
+                                    placeholder="Street Address" value="">
+                            </div>
+
+                            <div class="__inputs text-start block mb-[24px]">
+                                <span class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">Address
+                                    2</span>
+                                <input type="text" name="address2"
+                                    class="required:border-red-500 mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1"
+                                    placeholder="Address Line 2" value="">
+                            </div>
+
+                            <div class="__inputs text-start block mb-[24px]">
+                                <span class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">City</span>
+                                <input type="text" name="city"
+                                    class="required:border-red-500 mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1"
+                                    placeholder="City" value="">
+                            </div>
+
+                            <div class="__inputs text-start block mb-[24px]">
+                                <span
+                                    class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">State/Prov/Reg</span>
+                                <input type="text" name="state"
+                                    class="required:border-red-500 mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1"
+                                    placeholder="State/Prov/Reg" value="">
+                            </div>
+
+                            <div class="__inputs text-start block mb-[24px]">
+                                <span
+                                    class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">Postal/Zip</span>
+                                <input type="text" name="zip"
+                                    class="required:border-red-500 mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1"
+                                    placeholder="Postal/Zip" value="">
+                            </div>
+
+                            <div class="__inputs text-start block mb-[24px]">
+                                <span
+                                    class="text-[14px] font-[400] mb-[5.5px] text-slate-700 tracking-wide">Country</span>
+
+                                <select name="country" id=""
+                                    class="__select_countries mt-1 px-[20px] py-[15.25px] rounded-[8px] bg-white border-[1px] border-[#E2E8F0] text-[14px] placeholder-[#A0AEC0] placeholder:font-[400] focus:outline-none block w-full h-[50px] focus:ring-1">
+                                    <option value="US">USA</option>
+                                </select>
+                            </div>
+                        </section>
+
+                    </div>
+
+                    <div class="flex justify-end __actions py-[40px]">
+                        <button
+                            class="text-[12px] flex gap-[5px] items-center bg-black text-white py-[10px] px-5 rounded __file_import drop-shadow-md"
+                            type="button" name="submit">
+
+                            <span class="tracking-widest __label uppercase"> submit </span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -122,6 +245,8 @@
     <script src="/src/GetMembers.js"></script>
     <script src="/src/FileUpload.js"></script>
     <script src="/src/DownloadMembers.js"></script>
+    <script src="/src/Countries.js"></script>
+    <script src="/src/Modal.js"></script>
 </body>
 
 </html>

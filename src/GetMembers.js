@@ -6,38 +6,22 @@ let data = [];
 const GetMembers = (function () {
   return {
     init: async (isImmediateLoad = false) => {
-      GetMembers.noDataHTML();
-
       if (!isImmediateLoad) {
+        GetMembers.noDataHTML();
         return;
       }
 
-      await GetMembers.getRequest().then((members) => {
-        loadingRow.classList.add("hidden");
+      loadingRow.classList.remove("hidden");
 
+      await GetMembers.getRequest().then((members) => {
         if (!members.length) {
           GetMembers.noDataHTML();
           return;
         }
 
-        let html = "";
+        membersTable.deleteRow(0);
         members.map((member, i) => {
-          html += `
-                <tr class="border-b">
-                    <td class="py-[20px]"> ${i + 1} </td>
-                    <td class="py-[20px]">${member.email_address}</td>
-                    <td class="py-[20px]">${member.merge_fields.FNAME}</td>
-                    <td class="py-[20px]">${member.merge_fields.LNAME}</td>
-                    <td class="py-[20px]">${
-                      member.merge_fields.ADDRESS.addr1
-                    } ${member.merge_fields.ADDRESS.addr2} ${
-            member.merge_fields.ADDRESS.city
-          } ${member.merge_fields.ADDRESS.country} ${
-            member.merge_fields.ADDRESS.state
-          } ${member.merge_fields.ADDRESS.zip}</td>
-                    <td class="py-[20px]">${member.merge_fields.PHONE}</td>
-                </tr>
-            `;
+          GetMembers.addRow(member)
 
           data.push({
             email_address: member.email_address,
@@ -48,10 +32,13 @@ const GetMembers = (function () {
           });
         });
 
-        membersTable.innerHTML = html;
         document.querySelector(
           `.__total_contacts`
         ).textContent = `Total # of contacts: ${members.length}`;
+        document.querySelector(`.__tfoot`).innerHTML = `
+        <div class="text-[12px] font-bold">
+                              <td class="pt-[20px]" colspan="10">1-${ members.length }</td>
+                          </div>`;
 
         fileExportButton.removeAttribute("disabled");
       });
@@ -68,8 +55,8 @@ const GetMembers = (function () {
 
     addRow: (rowData) => {
       const newRowHTML = `
-      <tr class="border-b">
-          <td class="py-[20px]"> ${membersTable.rows.length + 1} </td>
+      <tr class="border-b text-[13px]">
+          <td class="py-[20px] font-[600]"> ${membersTable.rows.length + 1} </td>
           <td class="py-[20px]">${rowData.email_address}</td>
           <td class="py-[20px]">${rowData.merge_fields.FNAME}</td>
           <td class="py-[20px]">${rowData.merge_fields.LNAME}</td>
@@ -96,4 +83,4 @@ const GetMembers = (function () {
   };
 })();
 
-GetMembers.init();
+GetMembers.init(true);

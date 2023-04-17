@@ -4,6 +4,8 @@ import path from "path";
 const mailchimp = require("@mailchimp/mailchimp_marketing");
 const crypto = require("crypto");
 
+const countryList = require("country-list");
+
 const bodyParser = require("body-parser");
 
 const apiKey = "d31eecdb83f2dc8b95bcc1ffe27a2e0e-us21";
@@ -47,6 +49,16 @@ app.get("/src/DownloadMembers.js", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "src", "DownloadMembers.js"));
 });
 
+app.get("/src/Countries.js", (req: Request, res: Response) => {
+  res.setHeader("Content-Type", "text/javascript");
+  res.sendFile(path.join(__dirname, "src", "Countries.js"));
+});
+
+app.get("/src/Modal.js", (req: Request, res: Response) => {
+  res.setHeader("Content-Type", "text/javascript");
+  res.sendFile(path.join(__dirname, "src", "Modal.js"));
+});
+
 app.post("/upload", async function (req: any, res: any) {
   const json = req.body;
 
@@ -67,6 +79,16 @@ app.get("/getMembers", async function (req: any, res: any) {
     });
 
     res.send(response.members);
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+app.get("/getCountries", async function (req: any, res: any) {
+  try {
+    const countries = countryList.getData();
+
+    res.send(countries);
   } catch (error) {
     res.send(error);
   }
